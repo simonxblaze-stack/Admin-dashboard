@@ -30,7 +30,8 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     await api.post("/accounts/login/", { email, password });
     const { data } = await api.get("/accounts/me/");
-    if (!data.is_staff) {
+    const isAdmin = Array.isArray(data.roles) && data.roles.map((r) => String(r).toUpperCase()).includes("ADMIN");
+    if (!isAdmin) {
       await api.post("/accounts/logout/").catch(() => { });
       throw { message: "Not authorized for admin access." };
     }
