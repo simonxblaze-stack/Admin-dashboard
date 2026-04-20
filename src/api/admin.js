@@ -10,3 +10,7 @@ export const getCourses       = async (params) => (await api.get("/courses/", { 
 export const getPayments      = async (params) => (await api.get("/payments/admin/orders/", { params })).data;
 export const getThreads       = async (params) => (await api.get("/forum/threads/", { params })).data;
 export const deleteThread     = async (id)     => (await api.delete(`/forum/threads/${id}/`)).data;
+
+export const getEnrollmentRequests      = async (params) => (await api.get("/enrollments/admin/requests/", { params })).data;
+export const actOnEnrollmentRequest     = async (id, action, admin_note = "") =>
+  (await api.post(`/enrollments/admin/requests/${id}/action/`, { action, admin_note })).data;
